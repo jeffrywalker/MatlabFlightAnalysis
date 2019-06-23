@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['trimtail_2em',['trimTail.m',['../trim_tail_8m.html',1,'']]]
+  ['verifytypelengths_2em',['verifyTypeLengths.m',['../verify_type_lengths_8m.html',1,'']]]
 ];

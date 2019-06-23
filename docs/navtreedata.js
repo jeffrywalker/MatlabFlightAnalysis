@@ -23,7 +23,7 @@ for the JavaScript code in this file
 */
 var NAVTREE =
 [
-  [ "MATLAB ArduPilot DataFlash Analysis", "index.html", [
+  [ "MATLAB Flight Analysis", "index.html", [
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
