@@ -125,6 +125,4 @@ function [] = readLog(obj)
         end
     end
     
-    % Display message on completion
-    disp('Done processing.');
 end

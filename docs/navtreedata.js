@@ -24,6 +24,7 @@ for the JavaScript code in this file
 var NAVTREE =
 [
   [ "MATLAB Flight Analysis", "index.html", [
+    [ "Todo List", "todo.html", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],

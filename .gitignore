@@ -1,6 +1,6 @@
 # Matlab autosaves
 *.m~
-
+*.asv
 # mat, bin, and logfiles sitting in Ardupilog top directory
 /*.mat
 /*.bin

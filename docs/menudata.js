@@ -23,6 +23,7 @@ for the JavaScript code in this file
 */
 var menudata={children:[
 {text:"Main Page",url:"index.html"},
+{text:"Related Pages",url:"pages.html"},
 {text:"Classes",url:"annotated.html",children:[
 {text:"Class List",url:"annotated.html"},
 {text:"Class Hierarchy",url:"inherits.html"},
@@ -44,7 +45,22 @@ var menudata={children:[
 {text:"s",url:"functions.html#index_s"},
 {text:"t",url:"functions.html#index_t"},
 {text:"v",url:"functions.html#index_v"}]},
-{text:"Functions",url:"functions_func.html"},
+{text:"Functions",url:"functions_func.html",children:[
+{text:"a",url:"functions_func.html#index_a"},
+{text:"b",url:"functions_func.html#index_b"},
+{text:"c",url:"functions_func.html#index_c"},
+{text:"d",url:"functions_func.html#index_d"},
+{text:"f",url:"functions_func.html#index_f"},
+{text:"g",url:"functions_func.html#index_g"},
+{text:"i",url:"functions_func.html#index_i"},
+{text:"l",url:"functions_func.html#index_l"},
+{text:"m",url:"functions_func.html#index_m"},
+{text:"n",url:"functions_func.html#index_n"},
+{text:"p",url:"functions_func.html#index_p"},
+{text:"r",url:"functions_func.html#index_r"},
+{text:"s",url:"functions_func.html#index_s"},
+{text:"t",url:"functions_func.html#index_t"},
+{text:"v",url:"functions_func.html#index_v"}]},
 {text:"Variables",url:"functions_vars.html",children:[
 {text:"a",url:"functions_vars.html#index_a"},
 {text:"b",url:"functions_vars.html#index_b"},

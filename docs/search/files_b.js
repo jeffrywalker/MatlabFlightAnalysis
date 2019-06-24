@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['verifytypelengths_2em',['verifyTypeLengths.m',['../verify_type_lengths_8m.html',1,'']]]
+  ['readlog_2em',['readLog.m',['../read_log_8m.html',1,'']]]
 ];
