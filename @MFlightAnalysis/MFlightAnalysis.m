@@ -99,7 +99,7 @@ classdef MFlightAnalysis < handle
         opt = plotOptions(obj, varargin);
         plot_vibe(obj, varargin);
         plot_attrate(obj, varargin);
-
+        plot_tune(obj, varargin);
 
         %> \todo implement
         %> \private
