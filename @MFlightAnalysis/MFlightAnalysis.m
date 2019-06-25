@@ -98,6 +98,7 @@ classdef MFlightAnalysis < handle
         % plotting
         opt = plotOptions(obj, varargin);
         plot_vibe(obj, varargin);
+        plot_attrate(obj, varargin);
 
 
         %> \todo implement

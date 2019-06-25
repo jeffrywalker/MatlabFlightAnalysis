@@ -28,6 +28,8 @@ function opt = plotOptions(obj, varargin)
     addOptional(p, 'linkX', true)
     %> \param grid [true]
     addOptional(p, 'grid', true)
+    %> \param aeroLabel user aerospace nomenclature to label
+    addOptional(p, 'aeroLabel', true);
     parse(p, varargin{:})
     opt = p.Results;
     % establish defaults in order to run
