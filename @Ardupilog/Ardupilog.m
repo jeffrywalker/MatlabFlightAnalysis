@@ -6,45 +6,45 @@
 classdef Ardupilog < dynamicprops & matlab.mixin.Copyable
     properties (Access = public)
         %> name of .bin file
-        fileName            
+        fileName
         %> path to .bin file
-        filePathName        
+        filePathName
         %> ArduPlane, ArduCopter etc
-        platform            
+        platform
         %> Firmware version
-        version             
+        version
         %> Specific git commit
-        commit              
+        commit
         %> String displaying time of boot in UTC
-        bootTimeUTC         
+        bootTimeUTC
         %> A cell array with all the message names contained in the log
-        msgsContained = {}; 
+        msgsContained = {};
         %> Total number of messages of the original log
-        totalLogMsgs = 0;   
+        totalLogMsgs = 0;
         %> Storage for the msgIds/msgNames desired for parsing
-        msgFilter = [];     
+        msgFilter = [];
         %> Number of messages included in this log
-        numMsgs = 0;        
+        numMsgs = 0;
     end
     properties (Access = private)
         fileID = -1;
         %> Message header as defined in ArduPilot
-        header = [163 149]; 
+        header = [163 149];
         %> The .bin file data as a row-matrix of chars (uint8's)
-        log_data = char(0); 
+        log_data = char(0);
         %> a local copy of the FMT info, to reduce run-time
-        fmt_cell = cell(0); 
+        fmt_cell = cell(0);
         %> equivalent to cell2mat(obj.fmt_cell(:,1)), to reduce run-time
-        fmt_type_mat = [];  
+        fmt_type_mat = [];
         FMTID = 128;
         FMTLen = 89;
         %> A cell array for reconstructing LineNo (line-number) for all entries
-        valid_msgheader_cell = cell(0); 
+        valid_msgheader_cell = cell(0);
         %> The MATLAB datenum (days since Jan 00, 0000) at APM microcontroller boot (TimeUS = 0)
-        bootDatenumUTC = NaN; 
+        bootDatenumUTC = NaN;
 
     end %properties
-    
+
     methods
         %> @brief ARDUPILOG Ardupilot log to MATLAB converter
         %> Reads an Ardupilot .bin log and produces structure with custom containers.
@@ -60,7 +60,7 @@ classdef Ardupilog < dynamicprops & matlab.mixin.Copyable
             if strcmp(p.Results.path,'~') % We just want to create a bare Ardupilog object
                 return;
             end
-            
+
             if isempty(p.Results.path)
                 % If constructor is empty, prompt user for log file
                 [filename, filepathname, ~] = uigetfile('*.bin','Select binary (.bin) log-file');
@@ -83,16 +83,16 @@ classdef Ardupilog < dynamicprops & matlab.mixin.Copyable
             if all(obj.fileName == 0) && all(obj.filePathName == 0)
                 return
             end
-            
+
             % THE MAIN CALL: Begin reading specified log file
             readLog(obj);
-            
+
             % Extract firmware version from MSG fields
             obj.findInfo();
-            
+
             % Attempt to find the UTC time of boot (at boot, TimeUS = 0)
             obj.findBootTimeUTC();
-            
+
             % Set the bootDatenumUTC for all LogMsgGroups
             % HGM: This can probably be done better after some code reorganization,
             %  but for now it works well enough. After refactoring is settled, we
@@ -106,7 +106,7 @@ classdef Ardupilog < dynamicprops & matlab.mixin.Copyable
                     end
                 end
             end
-            
+
             % Clear out the (temporary) properties
             obj.log_data = char(0);
             obj.fmt_cell = cell(0);
@@ -120,21 +120,21 @@ classdef Ardupilog < dynamicprops & matlab.mixin.Copyable
                 fclose(obj.fileID);
             end
         end
-        
+
         %> @brief Find all candidate headers within the log data
         %> Not all Indices may correspond to actual messages.
         function headerIndices = discoverHeaders(obj,msgId)
-            
+
             if nargin<2
                 msgId = [];
             end
             headerIndices = strfind(obj.log_data, [obj.header msgId]);
         end
-        
+
     end%methods (public)
-    
+
     methods(Access=protected)
-        
+
         function newObj = copyElement(obj)
         % Copy function - replacement for matlab.mixin.Copyable.copy() to create object copies
         % Found from somewhere in the internet
@@ -151,6 +151,6 @@ classdef Ardupilog < dynamicprops & matlab.mixin.Copyable
                 delete(fname);
             end
         end
-        
+
     end %methods
 end %classdef Ardupilog

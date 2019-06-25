@@ -24,9 +24,9 @@ classdef MFlightAnalysis < handle
         %> \public
         function removeLog(obj, varargin)
         end
-        
+
     end
-    
+
     methods(Static)
         %> @brief helper function to extract the log number
         %> @param[out] num numeric integer of log number
@@ -73,7 +73,7 @@ classdef MFlightAnalysis < handle
             % shift to zero
             if opt.shiftToZero
                 t = t - t(1);
-            end 
+            end
         end
         %> \brief cleans up axes and legends
         %> \param clear true/false whether to cleanup or not
@@ -98,14 +98,11 @@ classdef MFlightAnalysis < handle
         % plotting
         opt = plotOptions(obj, varargin);
         plot_vibe(obj, varargin);
-        
+
+
         %> \todo implement
         %> \private
-        function plot_attitude(obj, varargin)
-        end
-        %> \todo implement
-        %> \private
-        function plot_rates(obj, varargin) 
+        function plot_rates(obj, varargin)
         end
         %> \todo implement
         %> \private

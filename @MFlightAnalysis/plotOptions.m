@@ -34,9 +34,9 @@ function opt = plotOptions(obj, varargin)
     if isempty(opt.logNumber) && numel(obj.logs) >= 1
         opt.logNumber = obj.logs{1}.num;
     elseif ~isnumeric(opt.logNumber) && strcmp(opt.logNumber,'all')
-       opt.logNumber = cellfun(@(x) x.num, obj.logs); 
+       opt.logNumber = cellfun(@(x) x.num, obj.logs);
     end
-    
+
     if numel(opt.logNumber) > 1 && isempty(opt.legend)
         opt.legend = true;
     else

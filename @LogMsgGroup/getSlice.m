@@ -33,7 +33,7 @@ function [slice, remainder] = getSlice(obj, slice_values, slice_type)
         return
     end
     % End HGM TODO
-    
+
     % Create the slice as a new LogMsgGroup
     field_names_string = strjoin(obj.fieldNameCell,',');
     slice = LogMsgGroup(obj.typeNumID, obj.name, obj.data_len, obj.format, field_names_string);

@@ -6,7 +6,7 @@ function loadLogByNumber(obj, logNumbers)
 % get list of log files in the folder
 lf = obj.getLogList();
 
-% get the available log numbers 
+% get the available log numbers
 ln = arrayfun(@(x) obj.getLogNumber(x.name), lf);
 
 % ensure only unique log numbers exists

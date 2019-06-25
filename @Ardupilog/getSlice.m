@@ -15,16 +15,16 @@ function slice = getSlice(obj, slice_values, slice_type)
     % Copy all the properties, zero the number of messages
     slice = copy(obj);
     slice.numMsgs = 0;
-    
+
     % Loop through the LogMsgGroups, slicing each one
     logProps = properties(obj);
     for i = 1:length(logProps)
         propertyName = logProps{i}; % Get the name of the property under examination
         % We are interested only in LogMsgGroup objects, skip the rest of the properties
-        if ~isa(obj.(propertyName),'LogMsgGroup') 
+        if ~isa(obj.(propertyName),'LogMsgGroup')
             continue;
         end
-        
+
         % Slice the LogMsgGroup
         lmg_slice = slice.(propertyName).getSlice(slice_values, slice_type);
         % If the slice is not empty, add it to the Ardupilog slice

@@ -52,7 +52,7 @@ end
 % Update the msgsContained attribute
 newlog.msgsContained = setdiff(obj.msgsContained, deletedMsgNames);
 
-newlog = newlog.deleteEmptyMsgs();  
+newlog = newlog.deleteEmptyMsgs();
 
 % Update the number of actual included messages
 newlog.numMsgs = 0;

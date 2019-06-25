@@ -40,7 +40,7 @@ end
 % loop over all dates now that we know they are in a valid format
 lf = arrayfun(@(x) x.name, obj.getLogList(), 'UniformOutput', false);
 % available dates
-lfDates = obj.getLogDate(lf); 
+lfDates = obj.getLogDate(lf);
 % get indices that match the request
 matches = cellfun(@(x) find(strcmp(x, lfDates) == 1), date, 'UniformOutput', false);
 % remove null entries

@@ -22,7 +22,7 @@
 %
 %> \public
 function [] = findBootTimeUTC(obj)
-     
+
     % HGM HACK: The 3DR SOLO has a TimeMS field from the GPS, which is
     % the GMS data (miliseconds in GPS week). Because this conflicts with
     % the usual "TimeMS" data which is the miliseconds since boot, that
@@ -63,7 +63,7 @@ function [] = findBootTimeUTC(obj)
         recv_GWk = temp(first_ndx);
         temp = obj.GPS.(gpssecstr);
         recv_GMS = temp(first_ndx);
-        
+
         % Calculate the gps-time datenum
         %  Ref: http://www.oc.nps.edu/oc2902w/gps/timsys.html
         %  Ref: https://confluence.qps.nl/display/KBE/UTC+to+GPS+Time+Correction
@@ -98,5 +98,5 @@ function [] = findBootTimeUTC(obj)
         % Put a human-readable version in the public properties
         obj.bootTimeUTC = datestr(obj.bootDatenumUTC, 'yyyy-mm-dd HH:MM:SS');
         %obj.bootTimeUTC = datestr(obj.bootDatenumUTC, 'yyyy-mm-dd HH:MM:SS.FFF');
-    end                
+    end
 end

@@ -12,7 +12,7 @@ function dump = getStruct(obj, varargin)
     else
         verbose=0;
     end
-    
+
     dump = struct();
     props = properties(obj)';
     % Copy all properties which are not LogMsgGroups

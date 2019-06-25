@@ -8,14 +8,14 @@ function [] = storeFormat(obj, type_num, type_name, data_length, format_string,.
     else
         obj.fieldNameCell = strsplit(field_names_string,',');
     end
-    
+
     % Verify that format and labels agree
     if length(format_string)~=length(obj.fieldNameCell)
         warning('incompatible data on msg type=%d/%s', type_num, type_name);
         obj = []; % Clear the instance and return %TODO this is kind of messy
         return
     end
-    
+
     % For each of the fields
     for ndx = 1:length(obj.fieldNameCell)
         fieldNameStr = obj.sanitizeFieldName(obj.fieldNameCell{ndx});
@@ -25,7 +25,7 @@ function [] = storeFormat(obj, type_num, type_name, data_length, format_string,.
         else
             obj.fieldInfo(end+1) = addprop(obj, fieldNameStr);
         end
-        
+
         % Put field format char (e.g. Q, c, b, h, etc.) into 'Description' field
         obj.fieldInfo(end).Description = format_string(ndx);
     end
@@ -35,7 +35,7 @@ function [] = storeFormat(obj, type_num, type_name, data_length, format_string,.
     obj.name = type_name;
     obj.data_len = data_length;
     obj.format = format_string;
-    
+
     % Assert that the provided message length and format agree
     obj.verifyTypeLengths();
 end

@@ -3,7 +3,7 @@
 %> @brief Extract vehicle firmware info
 %> \public
 function [] = findInfo(obj)
-                
+
     if isprop(obj,'MSG')
         for type = {'ArduPlane','ArduCopter','ArduRover','ArduSub'}
             info_row = strmatch(type{:},obj.MSG.Message);

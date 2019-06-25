@@ -6,13 +6,13 @@ function A = catstruct(varargin)
 %
 %     A.name = 'Me' ;
 %     B.income = 99999 ;
-%     X = catstruct(A,B) 
+%     X = catstruct(A,B)
 %     % -> X.name = 'Me' ;
 %     %    X.income = 99999 ;
 %
 %   If a fieldname is not unique among structures (i.e., a fieldname is
 %   present in more than one structure), only the value from the last
-%   structure with this field is used. In this case, the fields are 
+%   structure with this field is used. In this case, the fields are
 %   alphabetically sorted. A warning is issued as well. An axample:
 %
 %     S1.name = 'Me' ;
@@ -28,7 +28,7 @@ function A = catstruct(varargin)
 %     CD = catstruct(C,D) % CD is a 1x2 structure array with fields bb and aa
 %
 %   The last input can be the string 'sorted'. In this case,
-%   CATSTRUCT(S1,S2, ..., 'sorted') will sort the fieldnames alphabetically. 
+%   CATSTRUCT(S1,S2, ..., 'sorted') will sort the fieldnames alphabetically.
 %   To sort the fieldnames of a structure A, you could use
 %   CATSTRUCT(A,'sorted') but I recommend ORDERFIELDS for doing that.
 %
@@ -36,7 +36,7 @@ function A = catstruct(varargin)
 %   struct (0x0 struct array with no fields).
 %
 %   NOTE: To concatenate similar arrays of structs, you can use simple
-%   concatenation: 
+%   concatenation:
 %     A = dir('*.mat') ; B = dir('*.m') ; C = [A ; B] ;
 
 %   NOTE: This function relies on unique. Matlab changed the behavior of
@@ -83,7 +83,7 @@ end
 sz0 = [] ; % used to check that all inputs have the same size
 
 % used to check for a few trivial cases
-NonEmptyInputs = false(N,1) ; 
+NonEmptyInputs = false(N,1) ;
 NonEmptyInputsN = 0 ;
 
 % used to collect the fieldnames and the inputs
@@ -96,7 +96,7 @@ for ii=1:N,
     if ~isstruct(X),
         error('catstruct:InvalidArgument',['Argument #' num2str(ii) ' is not a structure.']) ;
     end
-    
+
     if ~isempty(X),
         % empty structs are ignored
         if ii > 1 && ~isempty(sz0)
@@ -124,27 +124,27 @@ elseif NonEmptyInputsN == 1,
     end
 else
     % there is actually something to concatenate
-    FN = cat(1,FN{:}) ;    
-    VAL = cat(1,VAL{:}) ;    
+    FN = cat(1,FN{:}) ;
+    VAL = cat(1,VAL{:}) ;
     FN = squeeze(FN) ;
     VAL = squeeze(VAL) ;
-    
-    
+
+
     [UFN,ind] = unique(FN, 'last') ;
     % If this line errors, due to your matlab version not having UNIQUE
     % accept the 'last' input, use the following line instead
     % [UFN,ind] = unique(FN) ; % earlier ML versions, like 6.5
-    
+
     if numel(UFN) ~= numel(FN),
         warning('catstruct:DuplicatesFound','Fieldnames are not unique between structures.') ;
         sorted = 1 ;
     end
-    
+
     if sorted,
         VAL = VAL(ind,:) ;
         FN = FN(ind,:) ;
     end
-    
+
     A = cell2struct(VAL, FN);
     A = reshape(A, sz0) ; % reshape into original format
 end

@@ -4,7 +4,7 @@
 %> Cross-references with the length of each message
 %> \public
 function headerIndices = discoverValidMsgHeaders(obj,msgId,msgLen,headerIndices)
-    
+
 %debug = true;
 debug = false;
 
@@ -22,7 +22,7 @@ validMask = obj.log_data(headerIndices+2)==msgId;
 headerIndices(~validMask) = [];
 
 % Check if the message can fit in the log
-overflow = find(headerIndices+msgLen-1>logSize,1,'first'); 
+overflow = find(headerIndices+msgLen-1>logSize,1,'first');
 if ~isempty(overflow)
     headerIndices(overflow:end) = [];
 end

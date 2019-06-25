@@ -92,7 +92,7 @@ function [] = storeData(obj, data)
             warning(['Unsupported format character: ',obj.fieldInfo(field_ndx).Description,...
                     ' --- Storing data as uint8 array.']);
         end
-        
+
         columnIndex = columnIndex + fieldLen;
     end
 end

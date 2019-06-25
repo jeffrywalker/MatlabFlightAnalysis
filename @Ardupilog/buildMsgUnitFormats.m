@@ -6,21 +6,21 @@ function [] = buildMsgUnitFormats(obj)
     fmtTypes = obj.FMTU.FmtType;
     unitIds = obj.FMTU.UnitIds;
     multIds = obj.FMTU.MultIds;
-    
+
     % Read UNIT data
     UNITId = obj.UNIT.Id;
-    UNITLabel = obj.UNIT.Label;            
+    UNITLabel = obj.UNIT.Label;
     % Read MULT data
     MULTId = obj.MULT.Id;
     MULTMult = obj.MULT.Mult;
-    
+
     % Build a msgId to msgName lookup table
     msgIds = zeros(1,length(obj.msgsContained));
     for msgIdx = 1:length(msgIds)
         msgName = obj.msgsContained{msgIdx};
         msgIds(msgIdx) = obj.(msgName).typeNumID;
     end
-    
+
     % Iterate over each FMTU message
     for fmtIdx = 1:length(fmtTypes)
         msgId = fmtTypes(fmtIdx);

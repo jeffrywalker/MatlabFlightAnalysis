@@ -22,17 +22,17 @@ function [] = readLog(obj)
     else
         warn('File not closed successfully')
     end
-    
+
     % Discover the locations of all the messages
     allHeaderCandidates = obj.discoverHeaders([]);
-    
+
     % Find the FMT message legnth
     obj.findFMTLength(allHeaderCandidates);
-    
+
     % Read the FMT messages
     data = obj.isolateMsgData(obj.FMTID,obj.FMTLen,allHeaderCandidates);
     obj.createLogMsgGroups(data');
-    
+
     % Check for validity of the input msgFilter
     if ~isempty(obj.msgFilter)
         if iscellstr(obj.msgFilter) %obj.msgFilter is a cell-array of strings
@@ -44,10 +44,10 @@ function [] = readLog(obj)
             invalid = find(ismember(obj.msgFilter,cell2mat(obj.fmt_cell(:,1)))==0);
             for i=1:length(invalid)
                 warning('Invalid element in provided message filter: %d',obj.msgFilter(invalid(i)));
-            end                    
+            end
         end
     end
-    
+
     % Iterate over all the discovered msgs
     for i=1:length(obj.fmt_cell)
         msgId = obj.fmt_cell{i,1};
@@ -60,7 +60,7 @@ function [] = readLog(obj)
         data = obj.isolateMsgData(msgId,msgLen,allHeaderCandidates);
 
         % Check against the message filters
-        if ~isempty(obj.msgFilter) 
+        if ~isempty(obj.msgFilter)
             if iscellstr(obj.msgFilter)
                 if ~ismember(msgName,obj.msgFilter)
                     continue;
@@ -73,17 +73,17 @@ function [] = readLog(obj)
                 error('Unexpected comparison result');
             end
         end
-        
+
         % If message not filtered, store it
         obj.(msgName).storeData(data');
     end
-    
+
     % If available, parse unit formatting messages
     availableFields = fieldnames(obj);
     if (ismember('UNIT', availableFields) && ismember('MULT', availableFields) && ismember('FMTU', availableFields))
         obj.buildMsgUnitFormats();
     end
-    
+
     % Construct the LineNo for the whole log
     LineNo_ndx_vec = sort(vertcat(obj.valid_msgheader_cell{:,2}));
     LineNo_vec = [1:length(LineNo_ndx_vec)]';
@@ -95,7 +95,7 @@ function [] = readLog(obj)
         msgId = obj.valid_msgheader_cell{i,1};
         row_in_fmt_cell = vertcat(obj.fmt_cell{:,1})==msgId;
         msgName = obj.fmt_cell{row_in_fmt_cell,2};
-        
+
         % Check if this message was meant to be filtered
         if iscellstr(obj.msgFilter)
             if ~isempty(obj.msgFilter) && ~ismember(msgName,obj.msgFilter)
@@ -111,11 +111,11 @@ function [] = readLog(obj)
 
         % Pick out the correct line numbers
         msg_LineNo = LineNo_vec(ismember(LineNo_ndx_vec, obj.valid_msgheader_cell{i,2}));
-        
+
         % Write to the LogMsgGroup
         obj.(msgName).setLineNo(msg_LineNo);
     end
-    
+
     % Update the number of actual included messages
     propNames = properties(obj);
     for i = 1:length(propNames)
@@ -124,5 +124,5 @@ function [] = readLog(obj)
             obj.numMsgs = obj.numMsgs + length(obj.(propName).LineNo);
         end
     end
-    
+
 end
