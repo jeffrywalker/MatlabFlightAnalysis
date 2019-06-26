@@ -11,6 +11,9 @@ var dir_99330243707bd10dee5282297b3cf15a =
       [ "MFlightAnalysis", "class_m_flight_analysis.html", "class_m_flight_analysis" ]
     ] ],
     [ "plot.m", "plot_8m.html", null ],
+    [ "plot_attrate.m", "plot__attrate_8m.html", null ],
+    [ "plot_tune.m", "plot__tune_8m.html", null ],
+    [ "plot_velpos.m", "plot__velpos_8m.html", null ],
     [ "plot_vibe.m", "plot__vibe_8m.html", null ],
     [ "plotOptions.m", "plot_options_8m.html", null ]
 ];
