@@ -23,13 +23,13 @@ for j=1:3
     obj.cleanup(opt.clear)
 
     for k=1:numel(li)
-        VIBE = obj.logs{li(k)}.log.VIBE;
+        grp = obj.logs{li(k)}.log.VIBE;
         % start time range option
-        [t, didx] = obj.prepareToPlot(opt, obj.logs{li(k)}.log.VIBE.TimeS, k);
+        [t, didx] = obj.prepareToPlot(opt, grp.TimeS, k);
         if isempty(opt.lineSpec)
-            plot(t, VIBE.(sprintf('Vibe%s', axName{j}))(didx))
+            plot(t, grp.(sprintf('Vibe%s', axName{j}))(didx))
         else
-            plot(t, VIBE.(sprintf('Vibe%s', axName{j}))(didx), opt.lineSpec{k})
+            plot(t, grp.(sprintf('Vibe%s', axName{j}))(didx), opt.lineSpec{k})
         end
         hold on
     end

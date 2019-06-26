@@ -100,6 +100,7 @@ classdef MFlightAnalysis < handle
         plot_vibe(obj, varargin);
         plot_attrate(obj, varargin);
         plot_tune(obj, varargin);
+        plot_velpos(obj, varargin);
 
         %> \todo implement
         %> \private

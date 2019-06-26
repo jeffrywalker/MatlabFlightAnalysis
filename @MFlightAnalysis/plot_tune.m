@@ -30,7 +30,7 @@ end
 
 pidx  = [1 3 5;
          2 4 6]';
-group = {'RATE','ATT'};
+msg = {'RATE','ATT'};
 param = {'R','P','Y';
          'Roll','Pitch','Yaw'}';
 aerol = {'p', 'q', 'r';
@@ -51,10 +51,10 @@ for n=1:size(pidx,2)
             tmp = sprintf('Des%s',param{m,n});
         end
         for k=1:numel(li)
-            % temporary group copy
-            grp = obj.logs{li(k)}.log.(group{n});
+            % temporary msg copy
+            grp = obj.logs{li(k)}.log.(msg{n});
             % get time and data indices
-            [t, didx] = obj.prepareToPlot(opt, obj.logs{li(k)}.log.(group{n}).TimeS, k);
+            [t, didx] = obj.prepareToPlot(opt, grp.TimeS, k);
             % plot parameters
             if isempty(opt.lineSpec)
                 plot(t, grp.(param{m,n})(didx))
@@ -69,7 +69,7 @@ for n=1:size(pidx,2)
         if opt.aeroLabel
             ylabel(aerol{m,n},'Interpreter','latex')
         else
-            ylabel(sprintf('%s.%s',group{n},param{m,n}))
+            ylabel(sprintf('%s.%s',msg{n},param{m,n}))
         end
         if opt.grid, grid on, end
         if opt.legend
