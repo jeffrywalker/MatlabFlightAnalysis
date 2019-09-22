@@ -24,6 +24,13 @@ classdef MFlightAnalysis < handle
         %> \public
         function removeLog(obj, varargin)
         end
+        
+        % externally defined
+        sweepIndices = getSweepIndices(obj, varargin);
+        varargout = getSignal(obj, logIdx, group, signal, varargin);
+        exist = checkForSignal(obj, logIndex, group, signal);
+        varargout = getMultiSignals(obj, logIdx, smap, varargin);
+        od = getSweepEvents(obj, logIdx, varargin);
 
     end
 
@@ -54,9 +61,6 @@ classdef MFlightAnalysis < handle
                 tmp     = regexp(logName{j},'_','split');
                 tmpDate = regexp(tmp{3},'-','split');
                 date{j} = datestr(sprintf('%s-%s-%s',tmpDate{1:3}),'yyyy-mm-dd');
-            end
-            if length(date) == 1
-                date = date{1};
             end
         end
     end

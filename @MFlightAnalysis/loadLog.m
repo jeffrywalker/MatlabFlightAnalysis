@@ -6,8 +6,9 @@ function loadLog(obj, slot, logFile)
            logFile = [logFile, '.bin'];
        end
        obj.logs{slot} = LogContainer(fullfile(obj.logFolder, logFile));
+       logDate = obj.getLogDate(logFile);
        fprintf('Loaded Log: %d, Date: %s\n', obj.getLogNumber(logFile), ...
-                                             obj.getLogDate(logFile));
+                                             logDate{1});
    catch ME
        warning('off','backtrace')
        warning('Failed to load log file: %s\n',logFile);
