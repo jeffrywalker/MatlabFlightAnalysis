@@ -6,7 +6,8 @@ function [] = setMultValues(obj, MultArray)
 
     % Validate input
     if length(obj.fieldNameCell)~=length(MultArray)
-        error('Wrong input length');
+         warning('Wrong input length');
+         MultArray = MultArray(1:length(obj.fieldNameCell));
     end
 
     for fieldIdx=1:length(MultArray)

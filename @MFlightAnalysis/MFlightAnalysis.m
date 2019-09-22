@@ -26,12 +26,22 @@ classdef MFlightAnalysis < handle
         end
         
         % externally defined
-        sweepIndices = getSweepIndices(obj, varargin);
+        [sweepIndices, sweepTimes] = getSweepIndices(obj, varargin);
         varargout = getSignal(obj, logIdx, group, signal, varargin);
         exist = checkForSignal(obj, logIndex, group, signal);
         varargout = getMultiSignals(obj, logIdx, smap, varargin);
-        od = getSweepEvents(obj, logIdx, varargin);
-
+        od = getSweepEvents(obj, varargin);
+        
+        %> \brief single parameter plotting in active window
+        function plotSignal(obj, logNum, grp, sig)
+           li  = obj.getLogIdx(logNum);
+           tmp = obj.getSignal( li, grp, sig);
+           plot(tmp.time, tmp.(sig))
+        end
+        function loadedLogs(obj)
+            cellfun(@(x) fprintf('Log: %d\n',x.num), obj.logs);
+        end
+        li = getLogIdx(obj, ln);
     end
 
     methods(Static)
@@ -64,6 +74,7 @@ classdef MFlightAnalysis < handle
             end
         end
     end
+    
     methods(Access=private, Static)
         %> \brief get generic plotting information
         %> \param opt plot options
@@ -95,7 +106,7 @@ classdef MFlightAnalysis < handle
             lfArray = dir(fullfile(obj.logFolder,'*.bin'));
         end
         [logSlot, new] = checkLogNumber(obj, num, warn);
-        li = getLogIdx(obj, ln);
+        
 
         loadLog(obj, slot, logFile);
 

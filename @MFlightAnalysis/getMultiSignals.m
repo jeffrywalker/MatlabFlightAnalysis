@@ -3,14 +3,22 @@
 %
 %> \returns ss a signal struct, or sm a signal matrix
 %> \note reference time is from first signal
-function varargout = getMultiSignals(obj, logIdx, smap, varargin)
+function varargout = getMultiSignals(obj, smap, varargin)
 p = inputParser;
+addOptional(p, 'logIdx', 1)
+addOptional(p, 'logNum', [])
 addOptional(p, 'additionalExclude', {});
 addOptional(p, 'defaultExclude', {'LineNo', 'TimeS', 'TimeUS', 'name',...
                                   'typeNumID', 'fieldUnits', 'fieldMultipliers',...
                                   'DatenumUTC'});
 parse(p, varargin{:})
 ui = p.Results;
+
+if ~isempty(ui.logNum)
+    logIdx = obj.getLogIdx(ui.logNum);
+else
+    logIdx = ui.logIdx;
+end
 
 % total exclude list
 excludeList = horzcat(ui.defaultExclude, ui.additionalExclude);
@@ -34,27 +42,20 @@ end
 % check for unique signal names in the set
 allSig = horzcat(smap{:,2});
 [allSig_,ia,ic] = unique(allSig);
-special = cell(numel(allSig) - numel(allSig_));
-ii = 1;
-for j=1:numel(special)
-    while(true)
-        if numel(find(ic == ic(ii))) > 1
-            special{j} = allSig{ic(ii)};
-            break
-        else
-            ii = ii+1;
-        end
-    end
-end
+sic = sort(ic);
+special = allSig_(sic(find(diff(sic)==0)));
+
+% verify common time, otherwise data won't be lined up
 
 % loop through all groups
+
 for j=1:size(smap,1)
     grp = smap{j,1};
     sn  = smap{j,2};
     % loop through all signals
     for k=1:numel(sn)
         sig = sn{k};
-        [d, t] = obj.getSignal(logIdx, grp, sig, 'asStruct', false);
+        [d, t, unit] = obj.getSignal(logIdx, grp, sig, 'asStruct', false);
         if j==1 && k==1 
             % extract time
             ss.time = t;
@@ -65,10 +66,11 @@ for j=1:size(smap,1)
             sname = sprintf('%s_%s',sig, grp);
         end
         ss.(sname) = d;
+        units.(sname) = unit;
     end
     
 end
 
 varargout{1} = ss;
-
+varargout{2} = units;
 end

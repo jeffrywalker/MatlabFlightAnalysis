@@ -7,7 +7,7 @@ function varargout = getSignal(obj, logIdx, group, signal, varargin)
 p = inputParser;
 addOptional(p, 'asStruct', true)
 addOptional(p, 'range',[])
-addOptional(p, 'shiftToZero', true);
+addOptional(p, 'shiftToZero', false);
 parse(p, varargin{:});
 ui = p.Results;
 
@@ -22,6 +22,7 @@ ss.(signal) = obj.logs{logIdx}.log.(group).(signal);
 if ~isempty(ui.range)
     ss = structfun(@(x) x(ui.range(1):ui.range(2)), ss, 'UniformOutput', false);
 end
+ss.unit     = obj.logs{logIdx}.log.(group).fieldUnits.(signal);
 
 % shift time to zero
 if ui.shiftToZero
@@ -33,5 +34,6 @@ if ui.asStruct
 else
     varargout{1} = ss.(signal);
     varargout{2} = ss.time;
+    varargout{3} = ss.unit;
 end
 end
