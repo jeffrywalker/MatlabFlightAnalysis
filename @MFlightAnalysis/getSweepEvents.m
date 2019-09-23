@@ -102,7 +102,7 @@ end
 % add information about this flight
 od.commit   = obj.logs{logIdx}.log.commit;
 % store flight time in sortable format
-od.bootTime = datestr(obj.logs{logIdx}.log.bootTimeUTC,'YYYYmmDDHHMMSS');
+od.fltID = obj.getFlightID('logIdx', logIdx);
 % store signal units
 od.units = units;
 end

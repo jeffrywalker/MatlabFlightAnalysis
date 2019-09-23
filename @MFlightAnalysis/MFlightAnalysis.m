@@ -38,8 +38,22 @@ classdef MFlightAnalysis < handle
            tmp = obj.getSignal( li, grp, sig);
            plot(tmp.time, tmp.(sig))
         end
+        %
         function loadedLogs(obj)
             cellfun(@(x) fprintf('Log: %d\n',x.num), obj.logs);
+        end
+        function fltID = getFlightID(obj, varargin)
+            p = inputParser;
+            addOptional(p, 'logNum', [])
+            addOptional(p, 'logidx', [])
+            parse(p, varargin{:})
+            ui = p.Results;
+            if ~isempty(ui.logNum)
+                li = obj.getLogIdx(ui.logNum);
+            else
+                li = ui.logIdx;
+            end
+            fltID = datestr(obj.logs{li}.log.bootTimeUTC,'YYYYmmDDHHMMSS');
         end
         li = getLogIdx(obj, ln);
     end
