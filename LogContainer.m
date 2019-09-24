@@ -14,10 +14,15 @@ classdef LogContainer
             obj.log  = Ardupilog(logFilePath);
             % extract info from file name
             [~, fn]  = fileparts(logFilePath);
-            tmp      = regexp(fn,'_','split');
-            obj.num  = str2double(tmp{2});
-            tmpDate  = regexp(tmp{3},'-','split');
-            obj.date = datestr(sprintf('%s-%s-%s',tmpDate{1:3}),'yyyy-mm-dd');
+            if ~contains(fn,'_')
+                snum = fn;
+            else
+                tmp  = regexp(fn,'_','split');
+                snum = tmp{2};
+            end
+            obj.num  = str2double(snum);
+            % get date from bootTimeUTC
+            obj.date = obj.log.bootTimeUTC;
         end
     end
 end

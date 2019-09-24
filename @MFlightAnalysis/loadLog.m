@@ -2,7 +2,7 @@
 %> \private
 function loadLog(obj, slot, logFile)
    try
-       if ~contains(logFile, '.bin')
+       if ~contains(lower(logFile), '.bin')
            logFile = [logFile, '.bin'];
        end
        obj.logs{slot} = LogContainer(fullfile(obj.logFolder, logFile));

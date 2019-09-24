@@ -4,8 +4,8 @@
 function opt = plotOptions(obj, varargin)
     p = inputParser;
     p.KeepUnmatched = true;
-    %> \param logNumber log numbers to plot, defaults to first loaded log
-    addOptional(p, 'logNumber', [])
+    %> \param logNum log numbers to plot, defaults to first loaded log
+    addOptional(p, 'logNum', [])
     %> \param legend [false] display legend. defaults to true if numel(logNum) > 1
     addOptional(p, 'legend', [])
     %> \param legendStr defaults to log numbers
@@ -33,13 +33,13 @@ function opt = plotOptions(obj, varargin)
     parse(p, varargin{:})
     opt = p.Results;
     % establish defaults in order to run
-    if isempty(opt.logNumber) && numel(obj.logs) >= 1
-        opt.logNumber = obj.logs{1}.num;
-    elseif ~isnumeric(opt.logNumber) && strcmp(opt.logNumber,'all')
-       opt.logNumber = cellfun(@(x) x.num, obj.logs);
+    if isempty(opt.logNum) && numel(obj.logs) >= 1
+        opt.logNum = obj.logs{1}.num;
+    elseif ~isnumeric(opt.logNum) && strcmp(opt.logNum,'all')
+       opt.logNum = cellfun(@(x) x.num, obj.logs);
     end
 
-    if numel(opt.logNumber) > 1 && isempty(opt.legend)
+    if numel(opt.logNum) > 1 && isempty(opt.legend)
         opt.legend = true;
     else
         opt.legend = false;
@@ -47,22 +47,22 @@ function opt = plotOptions(obj, varargin)
     % default legend string
     if isempty(opt.legendStr)
         % set legend string to be log numbers
-        opt.legendStr = arrayfun(@(x) sprintf('log-%d', x), opt.logNumber, 'UniformOutput', false);
+        opt.legendStr = arrayfun(@(x) sprintf('log-%d', x), opt.logNum, 'UniformOutput', false);
     end
     % default to no shift
     if isempty(opt.tShift)
-        opt.tShift = zeros(size(opt.logNumber));
+        opt.tShift = zeros(size(opt.logNum));
     end
     % default to all time
     if isempty(opt.tStart)
-        opt.tStart = zeros(size(opt.logNumber));
-    elseif numel(opt.tStart) ~= numel(opt.logNumber)
-        opt.tStart = repmat(opt.tStart, [1 numel(opt.logNumber)]);
+        opt.tStart = zeros(size(opt.logNum));
+    elseif numel(opt.tStart) ~= numel(opt.logNum)
+        opt.tStart = repmat(opt.tStart, [1 numel(opt.logNum)]);
     end
     if isempty(opt.tStop)
-        opt.tStop = inf(size(opt.logNumber));
-    elseif numel(opt.tStop) ~= numel(opt.logNumber)
-        opt.tStop = repmat(opt.tStop, [1 numel(opt.logNumber)]);
+        opt.tStop = inf(size(opt.logNum));
+    elseif numel(opt.tStop) ~= numel(opt.logNum)
+        opt.tStop = repmat(opt.tStop, [1 numel(opt.logNum)]);
     end
 
 end

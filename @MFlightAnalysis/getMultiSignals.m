@@ -7,6 +7,7 @@ function varargout = getMultiSignals(obj, smap, varargin)
 p = inputParser;
 addOptional(p, 'logIdx', 1)
 addOptional(p, 'logNum', [])
+addOptional(p, 'shiftToZero', false)
 addOptional(p, 'additionalExclude', {});
 addOptional(p, 'defaultExclude', {'LineNo', 'TimeS', 'TimeUS', 'name',...
                                   'typeNumID', 'fieldUnits', 'fieldMultipliers',...
@@ -57,6 +58,9 @@ for j=1:size(smap,1)
         sig = sn{k};
         [d, t, unit] = obj.getSignal(logIdx, grp, sig, 'asStruct', false);
         if j==1 && k==1 
+            if ui.shiftToZero
+                t = t - t(1);
+            end
             % extract time
             ss.time = t;
         end

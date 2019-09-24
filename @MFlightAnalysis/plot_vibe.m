@@ -15,7 +15,7 @@ opt = catstruct(opt, p.Results);
 % figure to plot in
 fh = nf(opt.name);
 % logs index to plot
-li = obj.getLogIdx(opt.logNumber);
+li = obj.getLogIdx(opt.logNum);
 ax = [];
 axName = {'X', 'Y', 'Z'};
 for j=1:3

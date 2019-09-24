@@ -20,7 +20,7 @@ warning on
 % figure to plot in
 fh = nf(opt.name);
 % logs index to plot
-li = obj.getLogIdx(opt.logNumber);
+li = obj.getLogIdx(opt.logNum);
 
 pidx  = [1 3 5;
          2 4 6]';

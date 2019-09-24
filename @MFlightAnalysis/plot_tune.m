@@ -21,7 +21,7 @@ warning on
 % figure to plot in
 fh = nf(opt.name);
 % logs index to plot
-li = obj.getLogIdx(opt.logNumber);
+li = obj.getLogIdx(opt.logNum);
 
 % ensure tuning data is present
 if any(arrayfun(@(x) length(obj.logs{x}.log.PTUN.TimeS) == 0, li))

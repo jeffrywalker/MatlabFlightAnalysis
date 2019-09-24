@@ -11,6 +11,10 @@ addOptional(p, 'shiftToZero', false);
 parse(p, varargin{:});
 ui = p.Results;
 
+if logIdx < 0
+    logIdx = obj.getLogIdx( abs(logIdx) );
+end
+
 if ~obj.checkForSignal(logIdx, group, signal)
     error('%s.%s does not exist\n',group, signal)
 end

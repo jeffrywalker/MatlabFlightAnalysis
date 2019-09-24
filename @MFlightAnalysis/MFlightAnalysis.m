@@ -68,8 +68,14 @@ classdef MFlightAnalysis < handle
             end
             num = zeros(numel(logName),1);
             for j=1:numel(logName)
-                tmp    = regexp(logName{j},'_','split');
-                num(j) = str2double(tmp{2});
+                [~,name] = fileparts(logName{j});
+                if contains(name,'_')
+                    tmp    = regexp(name,'_','split');
+                    snum   = tmp{2};
+                else
+                    snum = name;
+                end
+                num(j) = str2double(snum);
             end
         end
 
@@ -82,9 +88,13 @@ classdef MFlightAnalysis < handle
             end
             date = cell(numel(logName),1);
             for j=1:numel(logName)
-                tmp     = regexp(logName{j},'_','split');
-                tmpDate = regexp(tmp{3},'-','split');
-                date{j} = datestr(sprintf('%s-%s-%s',tmpDate{1:3}),'yyyy-mm-dd');
+                if contains(logName{j},'_')
+                    tmp     = regexp(logName{j},'_','split');
+                    tmpDate = regexp(tmp{3},'-','split');
+                    date{j} = datestr(sprintf('%s-%s-%s',tmpDate{1:3}),'yyyy-mm-dd');
+                else
+                    date{j} = 'UNK';
+                end
             end
         end
     end
@@ -110,6 +120,8 @@ classdef MFlightAnalysis < handle
             if clear
                 cla
                 delete(findobj(gcf,'Type','Legend','Axes',gca));
+                set(gca,'XLimMode','auto')
+                set(gca,'YLimMode','auto')
             end
         end
     end
@@ -118,6 +130,7 @@ classdef MFlightAnalysis < handle
         %> \private
         function lfArray = getLogList(obj)
             lfArray = dir(fullfile(obj.logFolder,'*.bin'));
+            lfArray = vertcat(lfArray, dir(fullfile(obj.logFolder,'*.BIN')));
         end
         [logSlot, new] = checkLogNumber(obj, num, warn);
         
@@ -130,15 +143,8 @@ classdef MFlightAnalysis < handle
         plot_attrate(obj, varargin);
         plot_tune(obj, varargin);
         plot_velpos(obj, varargin);
-
-        %> \todo implement
-        %> \private
-        function plot_rates(obj, varargin)
-        end
-        %> \todo implement
-        %> \private
-        function plot_states(obj, varargin)
-        end
+        plot_blswpresp(obj, varargin);
+        plot_rcio(obj, varargin);
     end
     %% Hide Handle Stuff
     methods(Hidden)
