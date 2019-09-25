@@ -38,8 +38,15 @@ function [] = buildMsgUnitFormats(obj)
             unitNames{unitIdx} = unitName;
             % Lookup multiplier identifier
             idx = find(MULTId==currentMultIds(unitIdx));
-            multValue = MULTMult(idx);
-            multValues(unitIdx) = multValue;
+            try
+                multValue = MULTMult(idx);
+                multValues(unitIdx) = multValue;
+            catch
+                warning('backtrace','off')
+                warning('Issue processing multiplier for: %s\n', msgName)
+                warning('backtrace','on')
+            end
+            
         end
         % Pass the information into the LogMsgGroup
         obj.(msgName).setUnitNames(unitNames);

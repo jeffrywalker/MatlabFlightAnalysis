@@ -39,8 +39,12 @@ classdef MFlightAnalysis < handle
            plot(tmp.time, tmp.(sig))
         end
         %
-        function loadedLogs(obj)
-            cellfun(@(x) fprintf('Log: %d\n',x.num), obj.logs);
+        function varargout = loadedLogs(obj)
+            if nargout == 1
+                varargout{1} = cellfun(@(x) x.num, obj.logs);
+            else
+                cellfun(@(x) fprintf('Log: %d\n',x.num), obj.logs);
+            end
         end
         function fltID = getFlightID(obj, varargin)
             p = inputParser;
